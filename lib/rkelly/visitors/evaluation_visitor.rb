@@ -39,6 +39,10 @@ module RKelly
         end
       end
 
+      def visit_ConditionalNode(o)
+        visit_IfNode(o)
+      end
+
       def visit_ResolveNode(o)
         scope_chain[o.value]
       end
@@ -314,7 +318,7 @@ module RKelly
       %w{
         ArrayNode BitAndNode BitOrNode
         BitXOrNode BracketAccessorNode BreakNode
-        CaseBlockNode CaseClauseNode CommaNode ConditionalNode
+        CaseBlockNode CaseClauseNode CommaNode
         ConstStatementNode ContinueNode DeleteNode
         DoWhileNode ElementNode EmptyStatementNode
         ForInNode ForNode
