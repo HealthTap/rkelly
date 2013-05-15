@@ -15,6 +15,10 @@ module RKelly
       var.is_a?(RKelly::JS::Property) ? var.value : nil
     end
 
+    def []=(name, value)
+      @scope[name].value = value
+    end
+
     # Execute +js+
     def execute(js)
       eval(js)
