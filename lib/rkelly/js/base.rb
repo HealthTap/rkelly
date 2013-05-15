@@ -13,11 +13,12 @@ module RKelly
       end
 
       def [](name)
-        return self.properties[name] if has_property?(name)
-        if self.properties['prototype'].value != :undefined
-          self.properties['prototype'].value[name]
+        return self.properties[name] if @properties.has_key?(name)
+        prototype = self.properties['prototype']
+        if prototype.value != :undefined && prototype.value.has_property?(name)
+          prototype.value[name]
         else
-          RKelly::Runtime::UNDEFINED
+          self.properties[name]
         end
       end
 
