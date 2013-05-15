@@ -191,6 +191,34 @@ module RKelly
         RKelly::JS::Property.new(:equal_node, left.value == right.value)
       end
 
+      def visit_LessNode(o)
+        left = o.left.accept(self)
+        right = o.value.accept(self)
+
+        RKelly::JS::Property.new(:less_node, left.value < right.value)
+      end
+
+      def visit_LessOrEqualNode(o)
+        left = o.left.accept(self)
+        right = o.value.accept(self)
+
+        RKelly::JS::Property.new(:less_or_equal_node, left.value <= right.value)
+      end
+
+      def visit_GreaterNode(o)
+        left = o.left.accept(self)
+        right = o.value.accept(self)
+
+        RKelly::JS::Property.new(:greater_node, left.value > right.value)
+      end
+
+      def visit_GreaterOrEqualNode(o)
+        left = o.left.accept(self)
+        right = o.value.accept(self)
+
+        RKelly::JS::Property.new(:greater_or_equal_node, left.value >= right.value)
+      end
+
       def visit_BlockNode(o)
         o.value.accept(self)
       end
@@ -283,9 +311,9 @@ module RKelly
         ConstStatementNode ContinueNode DeleteNode
         DoWhileNode ElementNode EmptyStatementNode
         ForInNode ForNode
-        FunctionExprNode GetterPropertyNode GreaterNode GreaterOrEqualNode
-        InNode InstanceOfNode LabelNode LeftShiftNode LessNode
-        LessOrEqualNode LogicalAndNode LogicalOrNode
+        FunctionExprNode GetterPropertyNode
+        InNode InstanceOfNode LabelNode LeftShiftNode
+        LogicalAndNode LogicalOrNode
         NotEqualNode NotStrictEqualNode
         ObjectLiteralNode OpAndEqualNode OpDivideEqualNode
         OpLShiftEqualNode OpMinusEqualNode OpModEqualNode
