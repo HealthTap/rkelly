@@ -191,6 +191,13 @@ module RKelly
         RKelly::JS::Property.new(:equal_node, left.value == right.value)
       end
 
+      def visit_NotEqualNode(o)
+        left = o.left.accept(self)
+        right = o.value.accept(self)
+
+        RKelly::JS::Property.new(:not_equal_node, left.value != right.value)
+      end
+
       def visit_LessNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
@@ -314,7 +321,7 @@ module RKelly
         FunctionExprNode GetterPropertyNode
         InNode InstanceOfNode LabelNode LeftShiftNode
         LogicalAndNode LogicalOrNode
-        NotEqualNode NotStrictEqualNode
+        NotStrictEqualNode
         ObjectLiteralNode OpAndEqualNode OpDivideEqualNode
         OpLShiftEqualNode OpMinusEqualNode OpModEqualNode
         OpMultiplyEqualNode OpOrEqualNode OpRShiftEqualNode
