@@ -15,6 +15,16 @@ module RKelly
           self.attributes.include?(property)
         end
       end
+
+      def to_s
+        if function
+          "#{name}: #{function}"
+        elsif value.is_a?(Proc)
+          "#{name}: function() { ... }"
+        else
+          "#{name}: #{value}"
+        end
+      end
     end
   end
 end

@@ -46,6 +46,10 @@ module RKelly
         ECMAVisitor.new.accept(self)
       end
 
+      def to_s
+        to_ecma
+      end
+
       def to_dots
         visitor = DotVisitor.new
         visitor.accept(self)

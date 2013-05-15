@@ -76,6 +76,10 @@ module RKelly
 
       def returned?; @returned; end
 
+      def to_s
+        properties.to_s
+      end
+
       private
       def unbound_method(name, object_id = nil, &block)
         name = "#{name}_#{self.class.to_s.split('::').last}_#{object_id}"
