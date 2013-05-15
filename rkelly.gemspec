@@ -26,6 +26,8 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rdoc>, ["~> 4.0"])
       s.add_development_dependency(%q<hoe>, ["~> 3.6"])
       s.add_development_dependency(%q<racc>, ["~> 1.4.9"])
+      s.add_development_dependency(%q<pry>)
+      s.add_development_dependency(%q<pry-debugger>)
     else
       s.add_dependency(%q<rdoc>, ["~> 4.0"])
       s.add_dependency(%q<hoe>, ["~> 3.6"])
