@@ -315,6 +315,21 @@ module RKelly
         v
       end
 
+      def visit_ObjectLiteralNode(o)
+        obj = JS::Object.new
+        o.value.each do |prop|
+          name = prop.name
+          if name =~ /"(.+)"/
+            name = $1
+          elsif name =~ /'(.+)'/
+            name = $1
+          end
+          value = prop.value.accept(self)
+          obj[name] = value.value
+        end
+        RKelly::JS::Property.new(:object_literal, obj)
+      end
+
       %w{
         ArrayNode BitAndNode BitOrNode
         BitXOrNode BracketAccessorNode BreakNode
@@ -326,7 +341,7 @@ module RKelly
         InNode InstanceOfNode LabelNode LeftShiftNode
         LogicalAndNode LogicalOrNode
         NotStrictEqualNode
-        ObjectLiteralNode OpAndEqualNode OpDivideEqualNode
+        OpAndEqualNode OpDivideEqualNode
         OpLShiftEqualNode OpMinusEqualNode OpModEqualNode
         OpMultiplyEqualNode OpOrEqualNode OpRShiftEqualNode
         OpURShiftEqualNode OpXOrEqualNode ParameterNode
