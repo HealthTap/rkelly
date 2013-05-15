@@ -10,14 +10,23 @@ module RKelly
       @scope  = ScopeChain.new
     end
 
+    def [](name)
+      var = @scope[name]
+      var.is_a?(RKelly::JS::Property) ? var.value : nil
+    end
+
     # Execute +js+
     def execute(js)
+      eval(js)
+      @scope
+    end
+
+    def eval(js)
       function_visitor  = Visitors::FunctionVisitor.new(@scope)
       eval_visitor      = Visitors::EvaluationVisitor.new(@scope)
       tree = @parser.parse(js)
       function_visitor.accept(tree)
       eval_visitor.accept(tree)
-      @scope
     end
 
     def call_function(function_name, *args)
