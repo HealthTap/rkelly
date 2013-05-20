@@ -279,6 +279,16 @@ module RKelly
         bool
       end
 
+      def visit_LogicalOrNode(o)
+        left = o.left.accept(self)
+        to_boolean(left).value ? left : o.value.accept(self)
+      end
+
+      def visit_LogicalAndNode(o)
+        left = o.left.accept(self)
+        to_boolean(left).value ? o.value.accept(self) : left
+      end
+
       def visit_ArgumentsNode(o)
         o.value.map { |x| x.accept(self) }
       end
@@ -339,7 +349,6 @@ module RKelly
         ForInNode ForNode
         FunctionExprNode GetterPropertyNode
         InNode InstanceOfNode LabelNode LeftShiftNode
-        LogicalAndNode LogicalOrNode
         NotStrictEqualNode
         OpAndEqualNode OpDivideEqualNode
         OpLShiftEqualNode OpMinusEqualNode OpModEqualNode
