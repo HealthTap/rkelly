@@ -192,14 +192,14 @@ module RKelly
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:equal_node, left.value == right.value)
+        RKelly::JS::Property.new(:equal_node, compare(left.value, right.value))
       end
 
       def visit_NotEqualNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:not_equal_node, left.value != right.value)
+        RKelly::JS::Property.new(:not_equal_node, !compare(left.value, right.value))
       end
 
       def visit_LessNode(o)
@@ -460,6 +460,15 @@ module RKelly
         result = result.respond_to?(:nan?) && result.nan? ? JS::NaN.new : result
 
         RKelly::JS::Property.new(operator, result)
+      end
+
+      def compare(left, right)
+        if left.is_a?(String) && right.is_a?(Numeric)
+          right = right.to_s
+        elsif left.is_a?(Numeric) && right.is_a?(String)
+          left = left.to_s
+        end
+        left == right
       end
 
       def call_function(property, arguments = [])
