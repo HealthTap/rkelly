@@ -192,42 +192,42 @@ module RKelly
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:equal_node, compare(left.value, right.value))
+        RKelly::JS::Property.new(:equal_node, compare(left.value, right.value) == 0)
       end
 
       def visit_NotEqualNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:not_equal_node, !compare(left.value, right.value))
+        RKelly::JS::Property.new(:not_equal_node, compare(left.value, right.value) != 0)
       end
 
       def visit_LessNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:less_node, left.value < right.value)
+        RKelly::JS::Property.new(:less_node, compare(left.value, right.value) < 0)
       end
 
       def visit_LessOrEqualNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:less_or_equal_node, left.value <= right.value)
+        RKelly::JS::Property.new(:less_or_equal_node, compare(left.value, right.value) <= 0)
       end
 
       def visit_GreaterNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:greater_node, left.value > right.value)
+        RKelly::JS::Property.new(:greater_node, compare(left.value, right.value) > 0)
       end
 
       def visit_GreaterOrEqualNode(o)
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:greater_or_equal_node, left.value >= right.value)
+        RKelly::JS::Property.new(:greater_or_equal_node, compare(left.value, right.value) >= 0)
       end
 
       def visit_BlockNode(o)
@@ -468,7 +468,7 @@ module RKelly
         elsif left.is_a?(Numeric) && right.is_a?(String)
           left = left.to_s
         end
-        left == right
+        left <=> right
       end
 
       def call_function(property, arguments = [])

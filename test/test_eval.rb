@@ -60,4 +60,20 @@ class EvalTest < Test::Unit::TestCase
   def test_float_equal_string_is_false
     assert !@runtime.eval('1.5 == "1.52"')
   end
+
+  def test_string_less_integer_is_true
+    assert @runtime.eval('"1" < 2')
+  end
+
+  def test_string_less_or_equal_integer_is_true
+    assert @runtime.eval('"1" <= 1')
+  end
+
+  def test_integer_greater_string_is_true
+    assert @runtime.eval('2 > "1"')
+  end
+
+  def test_integer_greater_or_equal_string_is_true
+    assert @runtime.eval('2 >= "2"')
+  end
 end
