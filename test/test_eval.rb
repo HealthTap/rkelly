@@ -88,4 +88,44 @@ class EvalTest < Test::Unit::TestCase
   def test_bracket_accessor_2
     assert_equal 1, @runtime.eval('a = {}; b = "foo"; a[b] = 1; a[b]')
   end
+
+  def test_null_integer_comparison
+    assert @runtime.eval("null < 1")
+  end
+
+  def test_null_integer_comparison_2
+    assert @runtime.eval("null > -1")
+  end
+
+  def test_null_integer_comparison_3
+    assert !@runtime.eval("null > 0")
+  end
+
+  def test_null_integer_comparison_3
+    assert @runtime.eval("null >= 0")
+  end
+
+  def test_null_integer_comparison_4
+    assert !@runtime.eval("null == 0")
+  end
+
+  def test_integer_null_comparison
+    assert @runtime.eval("1 > null")
+  end
+
+  def test_integer_null_comparison_2
+    assert @runtime.eval("-1 < null")
+  end
+
+  def test_integer_null_comparison_3
+    assert !@runtime.eval("0 < null")
+  end
+
+  def test_integer_null_comparison_3
+    assert @runtime.eval("0 <= null")
+  end
+
+  def test_integer_null_comparison_4
+    assert !@runtime.eval("0 == null")
+  end
 end

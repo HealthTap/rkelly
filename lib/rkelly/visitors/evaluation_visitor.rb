@@ -192,7 +192,7 @@ module RKelly
         left = o.left.accept(self)
         right = o.value.accept(self)
 
-        RKelly::JS::Property.new(:equal_node, compare(left.value, right.value) == 0)
+        RKelly::JS::Property.new(:equal_node, compare(left.value, right.value, true) == 0)
       end
 
       def visit_NotEqualNode(o)
@@ -471,11 +471,21 @@ module RKelly
         RKelly::JS::Property.new(operator, result)
       end
 
-      def compare(left, right)
+      def compare(left, right, is_equal_operator = false)
         if left.is_a?(String) && right.is_a?(Numeric)
           right = right.to_s
         elsif left.is_a?(Numeric) && right.is_a?(String)
           left = left.to_s
+        elsif left.nil? && right.is_a?(Numeric)
+          left = 0
+          if is_equal_operator && right == 0
+            return -1
+          end
+        elsif right.nil? && left.is_a?(Numeric)
+          right = 0
+          if is_equal_operator && left == 0
+            return -1
+          end
         end
         left <=> right
       end
