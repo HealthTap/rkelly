@@ -76,4 +76,16 @@ class EvalTest < Test::Unit::TestCase
   def test_integer_greater_or_equal_string_is_true
     assert @runtime.eval('2 >= "2"')
   end
+
+  def test_node_accessor
+    assert_equal 1, @runtime.eval('a = {}; a.foo = 1; a.foo')
+  end
+
+  def test_bracket_accessor
+    assert_equal 1, @runtime.eval('a = {}; a["foo"] = 1; a["foo"]')
+  end
+
+  def test_bracket_accessor_2
+    assert_equal 1, @runtime.eval('a = {}; b = "foo"; a[b] = 1; a[b]')
+  end
 end

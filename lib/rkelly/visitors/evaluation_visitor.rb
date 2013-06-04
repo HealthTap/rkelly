@@ -340,9 +340,18 @@ module RKelly
         RKelly::JS::Property.new(:object_literal, obj)
       end
 
+      def visit_BracketAccessorNode(o)
+        accessor = o.accessor.accept(self)
+
+        left = o.value.accept(self)
+        right = left.value[accessor.value]
+        right.binder = left.value
+        right
+      end
+
       %w{
         ArrayNode BitAndNode BitOrNode
-        BitXOrNode BracketAccessorNode BreakNode
+        BitXOrNode BreakNode
         CaseBlockNode CaseClauseNode CommaNode
         ConstStatementNode ContinueNode DeleteNode
         DoWhileNode ElementNode EmptyStatementNode
