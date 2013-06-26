@@ -473,9 +473,9 @@ module RKelly
 
       def compare(left, right, is_equal_operator = false)
         if left.is_a?(String) && right.is_a?(Numeric)
-          right = right.to_s
+          left = Float(left) rescue left
         elsif left.is_a?(Numeric) && right.is_a?(String)
-          left = left.to_s
+          right = Float(right) rescue right
         elsif left.nil? && right.is_a?(Numeric)
           left = 0
           if is_equal_operator && right == 0

@@ -128,4 +128,12 @@ class EvalTest < Test::Unit::TestCase
   def test_integer_null_comparison_4
     assert !@runtime.eval("0 == null")
   end
+
+  def test_string_equality_with_leading_zero
+    assert @runtime.eval('"01" == 1')
+  end
+
+  def test_string_equality_with_leading_zero
+    assert !@runtime.eval('"hola" == 0')
+  end
 end
